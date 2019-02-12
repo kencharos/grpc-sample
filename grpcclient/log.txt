@@ -1,0 +1,145 @@
+00:46:14: Executing task 'Main.main()'...
+
+> Task :extractIncludeProto UP-TO-DATE
+> Task :extractProto UP-TO-DATE
+> Task :generateProto UP-TO-DATE
+> Task :compileJava
+> Task :processResources UP-TO-DATE
+> Task :classes
+
+> Task :Main.main()
+[ INFO] (main) onSubscribe(ReactiveBackpressureChunker$1$1)
+[ INFO] (main) onSubscribe(FluxMap.MapSubscriber)
+[ INFO] (main) request(unbounded)
+[ INFO] (main) request(unbounded)
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by com.google.protobuf.UnsafeUtil (file:/Users/kentaro.maeda/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.6.1/d06d46ecfd92ec6d0f3b423b4cd81cb38d8b924/protobuf-java-3.6.1.jar) to field java.nio.Buffer.address
+WARNING: Please consider reporting this to the maintainers of com.google.protobuf.UnsafeUtil
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+[ INFO] (grpc-default-executor-0) onNext(answer: "1"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(1)
+Answer:1
+[ INFO] (grpc-default-executor-0) onNext(answer: "2"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(2)
+Answer:2
+[ INFO] (grpc-default-executor-0) onNext(answer: "Fizz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Fizz)
+Answer:Fizz
+[ INFO] (grpc-default-executor-0) onNext(answer: "4"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(4)
+Answer:4
+[ INFO] (grpc-default-executor-0) onNext(answer: "Buz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Buz)
+Answer:Buz
+[ INFO] (grpc-default-executor-0) onNext(answer: "Fizz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Fizz)
+Answer:Fizz
+[ INFO] (grpc-default-executor-0) onNext(answer: "7"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(7)
+Answer:7
+[ INFO] (grpc-default-executor-0) onNext(answer: "8"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(8)
+Answer:8
+[ INFO] (grpc-default-executor-0) onNext(answer: "Fizz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Fizz)
+Answer:Fizz
+[ INFO] (grpc-default-executor-0) onNext(answer: "Buz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Buz)
+Answer:Buz
+[ INFO] (grpc-default-executor-0) onNext(answer: "11"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(11)
+Answer:11
+[ INFO] (grpc-default-executor-0) onNext(answer: "Fizz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Fizz)
+Answer:Fizz
+[ INFO] (grpc-default-executor-0) onNext(answer: "13"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(13)
+Answer:13
+[ INFO] (grpc-default-executor-0) onNext(answer: "14"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(14)
+Answer:14
+[ INFO] (grpc-default-executor-0) onNext(answer: "FizzBuz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(FizzBuz)
+Answer:FizzBuz
+[ INFO] (grpc-default-executor-0) onNext(answer: "16"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(16)
+Answer:16
+[ INFO] (grpc-default-executor-0) onNext(answer: "17"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(17)
+Answer:17
+[ INFO] (grpc-default-executor-0) onNext(answer: "Fizz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Fizz)
+Answer:Fizz
+[ INFO] (grpc-default-executor-0) onNext(answer: "19"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(19)
+Answer:19
+[ INFO] (grpc-default-executor-0) onNext(answer: "Buz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Buz)
+Answer:Buz
+[ INFO] (grpc-default-executor-0) onNext(answer: "Fizz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Fizz)
+Answer:Fizz
+[ INFO] (grpc-default-executor-0) onNext(answer: "22"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(22)
+Answer:22
+[ INFO] (grpc-default-executor-0) onNext(answer: "23"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(23)
+Answer:23
+[ INFO] (grpc-default-executor-0) onNext(answer: "Fizz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Fizz)
+Answer:Fizz
+[ INFO] (grpc-default-executor-0) onNext(answer: "Buz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Buz)
+Answer:Buz
+[ INFO] (grpc-default-executor-0) onNext(answer: "26"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(26)
+Answer:26
+[ INFO] (grpc-default-executor-0) onNext(answer: "Fizz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(Fizz)
+Answer:Fizz
+[ INFO] (grpc-default-executor-0) onNext(answer: "28"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(28)
+Answer:28
+[ INFO] (grpc-default-executor-0) onNext(answer: "29"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(29)
+Answer:29
+[ INFO] (grpc-default-executor-0) onNext(answer: "FizzBuz"
+)
+server response.[ INFO] (grpc-default-executor-0) onNext(FizzBuz)
+Answer:FizzBuz
+[ INFO] (grpc-default-executor-0) onComplete()
+[ INFO] (grpc-default-executor-0) onComplete()
+
+BUILD SUCCESSFUL in 11s
+6 actionable tasks: 2 executed, 4 up-to-date
+00:46:26: Task execution finished 'Main.main()'.

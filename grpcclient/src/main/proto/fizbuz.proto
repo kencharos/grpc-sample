@@ -1,5 +1,5 @@
 syntax = "proto3";
-
+// copy from server..
 package my.rpc;
 
 option java_multiple_files = true;

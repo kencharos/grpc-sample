@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package my.rpc;
+
+option java_multiple_files = true;
+option java_package = "my.rpc";
+
+// The greeting service definition.
+service FizBuzService {
+    rpc FizBuzOne (InputNumber) returns (FizBuzAnswer) {}
+    rpc FizBuzRange (FromTo) returns (stream FizBuzAnswer) {}
+    rpc FizBuzBatch (stream InputNumber) returns (FizBuzList) {}
+    rpc FizBuzMany (stream InputNumber) returns (stream FizBuzAnswer) {}
+}
+
+message InputNumber {
+    int32 num = 1;
+}
+
+message FromTo {
+    int32 fromTo = 1;
+}
+
+message FizBuzAnswer {
+    string answer = 1;
+}
+
+message FizBuzList {
+    repeated string answer = 1;
+}
