@@ -23,8 +23,9 @@ public class Main {
        // interactive();
 
         // test load balancing. please run docker-compose of top directory.
-        //testTCPLoadBalancing_ChannelEachRequest();
-        //testTCPLoadBalancing_sharedChannel();
+        testTCPLoadBalancing_ChannelEachRequest();
+        testTCPLoadBalancing_sharedChannel();
+        testL7LoadBalancing_sharedChannel();
 
     }
 
@@ -57,6 +58,23 @@ public class Main {
 
         }
     }
+
+    private static void testL7LoadBalancing_sharedChannel() {
+        // run, docker-compose.yaml
+
+        // connect  connection to L7 LoadBalancer(nginx).
+        var chan = createChannelForL7LoadBalancer();
+        for(int i = 0; i < 30; i++) {
+            // In L7 LB, request is distributed.
+            System.out.println(FizBuzServiceGrpc.newBlockingStub(chan)
+                    .fizBuzOne(InputNumber.newBuilder().setNum(i).build())
+                    .getAnswer());
+        }
+
+        chan.shutdownNow();
+
+    }
+
 
     private static void fizbuz30() throws Exception {
 
@@ -111,6 +129,13 @@ public class Main {
         return ManagedChannelBuilder.forAddress("localhost", 6565)
                                     .usePlaintext()
                                     .build();
+    }
+
+
+    private static ManagedChannel createChannelForL7LoadBalancer() {
+        return ManagedChannelBuilder.forAddress("localhost", 6564)
+                .usePlaintext()
+                .build();
     }
 
 }

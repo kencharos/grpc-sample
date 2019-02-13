@@ -10,6 +10,16 @@ services:
     depends_on: 
       - grpc1
       - grpc2
+  l7lb:
+    build:
+      context: ./l7lb
+    image: l7lb:latest
+    container_name: l7lb
+    ports:
+      - "6564:80"
+    depends_on: 
+      - grpc1
+      - grpc2
   grpc1:
     build: ./grpcserver
     image: grpcserver:latest
