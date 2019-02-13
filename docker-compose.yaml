@@ -1,0 +1,24 @@
+version: '2'
+services:
+  l4lb:
+    build:
+      context: ./l4lb
+    image: l4lb:latest
+    container_name: l4lb
+    ports:
+      - "6565:6565"
+    depends_on: 
+      - grpc1
+      - grpc2
+  grpc1:
+    build: ./grpcserver
+    image: grpcserver:latest
+    container_name: grpc1
+    environment:
+      - "GRPC_PORT=6566"
+  grpc2:
+    build: ./grpcserver
+    image: grpcserver:latest
+    container_name: grpc2
+    environment:
+      - "GRPC_PORT=6567"

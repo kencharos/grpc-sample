@@ -3,6 +3,7 @@ import java.util.Scanner;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import my.rpc.FizBuzAnswer;
+import my.rpc.FizBuzServiceGrpc;
 import my.rpc.InputNumber;
 import my.rpc.ReactorFizBuzServiceGrpc;
 import reactor.core.publisher.Flux;
@@ -19,8 +20,42 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         //fizbuz30();
-        interactive();
+       // interactive();
 
+        // test load balancing. please run docker-compose of top directory.
+        //testTCPLoadBalancing_ChannelEachRequest();
+        //testTCPLoadBalancing_sharedChannel();
+
+    }
+
+    private static void testTCPLoadBalancing_sharedChannel() {
+        // run, docker-compose.yaml
+
+        // connect TCP connection same backend server in TCP load balancing.
+        var chan = createChannel();
+        for(int i = 0; i < 30; i++) {
+            // these request send to same server...
+            System.out.println(FizBuzServiceGrpc.newBlockingStub(chan)
+                    .fizBuzOne(InputNumber.newBuilder().setNum(i).build())
+                    .getAnswer());
+        }
+
+        chan.shutdownNow();
+
+    }
+
+    private static void testTCPLoadBalancing_ChannelEachRequest() {
+
+        for(int i = 0; i < 30; i++) {
+            // loadbancing in TCP loadbalancing..
+            var chan = createChannel();
+            System.out.println(FizBuzServiceGrpc.newBlockingStub(chan)
+                    .fizBuzOne(InputNumber.newBuilder().setNum(i).build())
+                    .getAnswer());
+
+            chan.shutdownNow();
+
+        }
     }
 
     private static void fizbuz30() throws Exception {
