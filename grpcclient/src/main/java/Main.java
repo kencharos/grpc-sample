@@ -1,14 +1,11 @@
+import java.util.Scanner;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import my.rpc.FizBuzAnswer;
-import my.rpc.FizBuzServiceGrpc;
 import my.rpc.InputNumber;
 import my.rpc.ReactorFizBuzServiceGrpc;
 import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Scheduler;
-import reactor.core.scheduler.Schedulers;
-
-import java.util.Scanner;
 
 public class Main {
 
@@ -20,9 +17,9 @@ public class Main {
     つまり、後ろの二つはクライアントから送る値が一つの場合だけ、楽ができる。
      */
 
-    public static void main(String[] args) throws Exception{
-        fizbuz30();
-        //interactive();
+    public static void main(String[] args) throws Exception {
+        //fizbuz30();
+        interactive();
 
     }
 
@@ -30,55 +27,55 @@ public class Main {
 
         var chan = createChannel();
         var stb = ReactorFizBuzServiceGrpc.newReactorStub(chan);
-        Flux.range(1,30)
-                .map(n -> InputNumber.newBuilder().setNum(n).build())
-                .as(stb::fizBuzMany)
-                .log()
-                .map(res -> {
-                    System.out.print("server response.");
-                    return res.getAnswer();
-                })
-                .log()
-                .subscribe(a -> System.out.println("Answer:" + a), e -> e.printStackTrace())
+        Flux.range(1, 30)
+            .map(n -> InputNumber.newBuilder().setNum(n).build())
+            .as(stb::fizBuzMany)
+            .log()
+            .map(res -> {
+                System.out.print("server response.");
+                return res.getAnswer();
+            })
+            .log()
+            .subscribe(a -> System.out.println("Answer:" + a), e -> e.printStackTrace())
         ;
 
         Thread.sleep(10000L);
     }
 
-    private static void interactive() throws Exception{
+    private static void interactive() throws Exception {
 
         var chan = createChannel();
         var stb = ReactorFizBuzServiceGrpc.newReactorStub(chan);
 
         System.out.println("Interactive FizBuz. Input Numbers.");
 
-        Flux.create(sink -> {
+        // 標準入力から無限に生成される Hot Stream なので、subscribe無しでデータを流すように、publishとconnectが必要。
+        var source = Flux.create(sink -> {
             Scanner scanner = new Scanner(System.in);
             while (scanner.hasNext()) {
                 sink.next(scanner.nextLine());
             }
-        })
+        });
+
+        var connectable = source.publish();
+        connectable
                 .filter(l -> l.toString().matches("^[0-9]+$"))
                 .map(l -> Integer.parseInt(l.toString()))
                 .map(n -> InputNumber.newBuilder().setNum(n).build())
-                .log()
+                //.log()
                 .as(stb::fizBuzMany)
-                .log()
-                .map(res -> {
-                    System.out.println("server response.");
-                    return res.getAnswer();
-                })
-                .subscribeOn(Schedulers.newSingle("io"))
+                //.log()
+                .map(FizBuzAnswer::getAnswer)
                 .subscribe(a -> System.out.println("Answer:" + a), e -> e.printStackTrace());
-        Thread.sleep(10000L);
+
+        connectable.connect();
+
     }
 
     private static ManagedChannel createChannel() {
         return ManagedChannelBuilder.forAddress("localhost", 6565)
-                .usePlaintext()
-                .build();
+                                    .usePlaintext()
+                                    .build();
     }
-
-
 
 }
