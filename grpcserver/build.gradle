@@ -47,6 +47,13 @@ dependencies {
 }
 
 
+task cleanProtoGen{
+	doFirst{
+		delete("$projectDir/src/main/generated-proto")
+	}
+}
+clean.dependsOn cleanProtoGen
+
 protobuf {
 	protoc {
 		// The artifact spec for the Protobuf Compiler

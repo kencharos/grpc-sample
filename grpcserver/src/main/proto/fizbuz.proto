@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package my.rpc;
 
+import "validator.proto";
+
+
 option java_multiple_files = true;
 option java_package = "my.rpc";
 
@@ -14,8 +17,10 @@ service FizBuzService {
 }
 
 message InputNumber {
-    int32 num = 1;
+    int32 num = 1 [(validator.range) = {min:0, max:100}, (validator.required) = {}];
 }
+
+
 
 message FromTo {
     int32 fromTo = 1;

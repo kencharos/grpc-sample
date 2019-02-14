@@ -83,7 +83,7 @@ private static final long serialVersionUID = 0L;
   public static final int NUM_FIELD_NUMBER = 1;
   private int num_;
   /**
-   * <code>int32 num = 1;</code>
+   * <code>int32 num = 1 [(.validator.range) = { ... }</code>
    */
   public int getNum() {
     return num_;
@@ -394,13 +394,13 @@ private static final long serialVersionUID = 0L;
 
     private int num_ ;
     /**
-     * <code>int32 num = 1;</code>
+     * <code>int32 num = 1 [(.validator.range) = { ... }</code>
      */
     public int getNum() {
       return num_;
     }
     /**
-     * <code>int32 num = 1;</code>
+     * <code>int32 num = 1 [(.validator.range) = { ... }</code>
      */
     public Builder setNum(int value) {
       
@@ -409,7 +409,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 num = 1;</code>
+     * <code>int32 num = 1 [(.validator.range) = { ... }</code>
      */
     public Builder clearNum() {
       

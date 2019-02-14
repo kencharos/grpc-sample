@@ -8,7 +8,7 @@ public interface InputNumberOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 num = 1;</code>
+   * <code>int32 num = 1 [(.validator.range) = { ... }</code>
    */
   int getNum();
 }

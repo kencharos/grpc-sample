@@ -43,17 +43,18 @@ public final class Fizbuz {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014fizbuz.proto\022\006my.rpc\"\032\n\013InputNumber\022\013\n" +
-      "\003num\030\001 \001(\005\"\030\n\006FromTo\022\016\n\006fromTo\030\001 \001(\005\"\036\n\014" +
-      "FizBuzAnswer\022\016\n\006answer\030\001 \001(\t\"\034\n\nFizBuzLi" +
-      "st\022\016\n\006answer\030\001 \003(\t2\375\001\n\rFizBuzService\0228\n\t" +
-      "FizBuzOne\022\023.my.rpc.InputNumber\032\024.my.rpc." +
-      "FizBuzAnswer\"\000\0227\n\013FizBuzRange\022\016.my.rpc.F" +
-      "romTo\032\024.my.rpc.FizBuzAnswer\"\0000\001\022:\n\013FizBu" +
-      "zBatch\022\023.my.rpc.InputNumber\032\022.my.rpc.Fiz" +
-      "BuzList\"\000(\001\022=\n\nFizBuzMany\022\023.my.rpc.Input" +
-      "Number\032\024.my.rpc.FizBuzAnswer\"\000(\0010\001B\n\n\006my" +
-      ".rpcP\001b\006proto3"
+      "\n\014fizbuz.proto\022\006my.rpc\032\017validator.proto\"" +
+      "&\n\013InputNumber\022\027\n\003num\030\001 \001(\005B\n\202\265\030\002\020d\212\265\030\000\"" +
+      "\030\n\006FromTo\022\016\n\006fromTo\030\001 \001(\005\"\036\n\014FizBuzAnswe" +
+      "r\022\016\n\006answer\030\001 \001(\t\"\034\n\nFizBuzList\022\016\n\006answe" +
+      "r\030\001 \003(\t2\375\001\n\rFizBuzService\0228\n\tFizBuzOne\022\023" +
+      ".my.rpc.InputNumber\032\024.my.rpc.FizBuzAnswe" +
+      "r\"\000\0227\n\013FizBuzRange\022\016.my.rpc.FromTo\032\024.my." +
+      "rpc.FizBuzAnswer\"\0000\001\022:\n\013FizBuzBatch\022\023.my" +
+      ".rpc.InputNumber\032\022.my.rpc.FizBuzList\"\000(\001" +
+      "\022=\n\nFizBuzMany\022\023.my.rpc.InputNumber\032\024.my" +
+      ".rpc.FizBuzAnswer\"\000(\0010\001B\n\n\006my.rpcP\001b\006pro" +
+      "to3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -66,6 +67,7 @@ public final class Fizbuz {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          validator.Validator.getDescriptor(),
         }, assigner);
     internal_static_my_rpc_InputNumber_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -91,6 +93,13 @@ public final class Fizbuz {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_my_rpc_FizBuzList_descriptor,
         new java.lang.String[] { "Answer", });
+    com.google.protobuf.ExtensionRegistry registry =
+        com.google.protobuf.ExtensionRegistry.newInstance();
+    registry.add(validator.Validator.range);
+    registry.add(validator.Validator.required);
+    com.google.protobuf.Descriptors.FileDescriptor
+        .internalUpdateFileDescriptor(descriptor, registry);
+    validator.Validator.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

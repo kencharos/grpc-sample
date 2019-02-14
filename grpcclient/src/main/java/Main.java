@@ -23,10 +23,14 @@ public class Main {
        // interactive();
 
         // test load balancing. please run docker-compose of top directory.
-        testTCPLoadBalancing_ChannelEachRequest();
-        testTCPLoadBalancing_sharedChannel();
-        testL7LoadBalancing_sharedChannel();
+       // testTCPLoadBalancing_ChannelEachRequest();
+       // testTCPLoadBalancing_sharedChannel();
+       // testL7LoadBalancing_sharedChannel();
 
+        var ch = createChannel();
+        FizBuzServiceGrpc.newBlockingStub(ch)
+                         .fizBuzOne(InputNumber.newBuilder().setNum(12).build())
+                         .getAnswer();
     }
 
     private static void testTCPLoadBalancing_sharedChannel() {
