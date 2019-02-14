@@ -46,4 +46,19 @@ services:
     container_name: grpceureka
     ports:
       - "8761:8761"
+    depends_on: 
+      - grpc1
+      - grpc2
+  front:
+    build: ./grpcfront
+    image: grpcfront:latest
+    container_name: grpcfront
+    ports:
+      - "8080:8080"
+    environment:
+      - "EUREKA_HOST=eureka"
+    depends_on: 
+      - grpc1
+      - grpc2
+      - eureka
     
