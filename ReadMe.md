@@ -2,13 +2,13 @@
 
 ## check
 
-[x] gRPC Reactor plugin
-[x] gRPC Sprint Boot Starter
-[x] Proxy L4 LoadBalancer
-[x] Proxy L7 LoadBalancer
-[x] ClientSideLoadBalanser and name resolver with Eureka
-[ ] Interceptor (Validation, autentication)
-[ ] TLS
+- [x] gRPC Reactor plugin
+- [x] gRPC Sprint Boot Starter
+- [x] Proxy L4 LoadBalancer
+- [x] Proxy L7 LoadBalancer
+- [x] ClientSideLoadBalanser and name resolver with Eureka
+- [ ] Interceptor (Validation, autentication)
+- [ ] TLS
 
 ## projects
 
