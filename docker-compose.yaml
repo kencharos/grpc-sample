@@ -27,7 +27,7 @@ services:
     environment:
       - "GRPC_PORT=6566"
       - "SERVER_PORT=8081"
-      - "EUREKA_HOST=eureka"
+      - "EUREKA_HOST=grpceureka"
     ports:
       - "8081:8081"
   grpc2:
@@ -37,28 +37,25 @@ services:
     environment:
       - "GRPC_PORT=6567"
       - "SERVER_PORT=8082"
-      - "EUREKA_HOST=eureka"
+      - "EUREKA_HOST=grpceureka"
     ports:
       - "8082:8082"
-  eureka:
+  grpceureka:
     build: ./grpceureka
     image: grpceureka:latest
     container_name: grpceureka
     ports:
       - "8761:8761"
-    depends_on: 
-      - grpc1
-      - grpc2
-  front:
+  grpcfront:
     build: ./grpcfront
     image: grpcfront:latest
     container_name: grpcfront
     ports:
       - "8080:8080"
     environment:
-      - "EUREKA_HOST=eureka"
+      - "EUREKA_HOST=grpceureka"
     depends_on: 
+      - grpceureka
       - grpc1
       - grpc2
-      - eureka
     

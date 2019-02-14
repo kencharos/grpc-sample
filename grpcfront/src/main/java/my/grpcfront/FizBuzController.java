@@ -2,6 +2,7 @@ package my.grpcfront;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,15 +23,14 @@ import reactor.core.publisher.Mono;
 public class FizBuzController {
 
     @Autowired
-    ManagedChannel channel;
+    ChannelManager chan;
 
     @GetMapping("/fizbuz/{num}")
     public Mono<String> fizbuz(@PathVariable("num") int num) {
 
-        return ReactorFizBuzServiceGrpc.newReactorStub(channel)
+        return ReactorFizBuzServiceGrpc.newReactorStub(chan.channel())
                                 .fizBuzOne(InputNumber.newBuilder().setNum(num).build())
                                 .map(FizBuzAnswer::getAnswer);
-
     }
 
 }
