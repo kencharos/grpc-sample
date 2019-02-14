@@ -1,0 +1,11 @@
+
+grpc:
+  port: 6565 #override at docker-compose.
+eureka:
+  instance:
+    nonSecurePort: ${grpc.port}
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+server:
+  port: 8081
