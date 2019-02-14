@@ -6,7 +6,7 @@
 [x] gRPC Sprint Boot Starter
 [x] Proxy L4 LoadBalancer
 [x] Proxy L7 LoadBalancer
-[ ] ClientSideLoadBalanser with Eureka
+[x] ClientSideLoadBalanser and name resolver with Eureka
 [ ] Interceptor (Validation, autentication)
 [ ] TLS
 
