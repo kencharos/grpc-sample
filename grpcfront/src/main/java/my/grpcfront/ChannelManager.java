@@ -8,15 +8,19 @@ import org.springframework.stereotype.Component;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.EurekaClientConfig;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import my.eureka.EurekaNameResolverProvider;
 
 @Component
 public class ChannelManager {
 
     @Autowired
     private EurekaClient client;
+    @Autowired
+    private EurekaClientConfig config;
 
     private AtomicReference<ManagedChannel> instance = new AtomicReference<>();
 
@@ -30,9 +34,9 @@ public class ChannelManager {
 
     private ManagedChannel createChannel() {
 
-        final InstanceInfo instanceInfo = client.getNextServerFromEureka("grpc", false);
-        System.out.println("Fetch from eureka," + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort());
-        final ManagedChannel channel = ManagedChannelBuilder.forAddress(instanceInfo.getIPAddr(), instanceInfo.getPort())
+
+        final ManagedChannel channel = ManagedChannelBuilder.forTarget("eureka://" + "grpc")
+                                                            .nameResolverFactory(new EurekaNameResolverProvider(config))
                                                             .usePlaintext()
                                                             .build();
         return channel;
