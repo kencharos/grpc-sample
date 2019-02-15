@@ -7,11 +7,10 @@
 - [x] Proxy L4 LoadBalancer
 - [x] Proxy L7 LoadBalancer
 - [x] ClientSideLoadBalanser and name resolver with Eureka
-- [ ] Interceptor (Validation, autentication)
+- [x] Interceptor (Validation, autentication)
 - [ ] TLS
 
 ## projects
-
 
 ### grpcclient
 

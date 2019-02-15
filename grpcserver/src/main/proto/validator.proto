@@ -6,6 +6,7 @@ import "google/protobuf/descriptor.proto";
 
 // 独自のフィールドオプションを使うには、下記の通り拡張が必要。
 // 今回は数値範囲のチェックを行うrange, 必須チェックのrequiredを提供
+// required は定義だけ。バリデータはRangeだけサンプルで実装。
 extend google.protobuf.FieldOptions {
     Range range = 50000;
     Required required = 50001;
