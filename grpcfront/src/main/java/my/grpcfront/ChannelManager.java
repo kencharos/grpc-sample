@@ -20,8 +20,6 @@ import my.eureka.EurekaNameResolverProvider;
 public class ChannelManager {
 
     @Autowired
-    private EurekaClient client;
-    @Autowired
     private EurekaClientConfig config;
 
     private AtomicReference<ManagedChannel> instance = new AtomicReference<>();

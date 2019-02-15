@@ -18,11 +18,16 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+/*
+ref https://medium.com/@mykidong/howto-grpc-java-client-side-load-balancing-using-consul-8f729668d3f8
+ */
 public class EurekaNameResolver extends NameResolver {
 
     private final String serviceName;
     private final String portMetaData;
     private final EurekaClient eurekaClient;
+
+    private Listener listener;
 
     public EurekaNameResolver(EurekaClientConfig clientConfig, URI targetUri, String portMetaData) {
         this.portMetaData = portMetaData;
@@ -45,28 +50,40 @@ public class EurekaNameResolver extends NameResolver {
         return serviceName;
     }
 
+
+
     @Override
     public void start(Listener listener) {
+        this.listener = listener;
         update(listener);
     }
 
+    @Override
+    public void refresh() {
+        System.out.println("NameResolver Refresh Called.");
+        update(listener);
+    }
 
     private void update(Listener listener) {
         System.out.println("NameResolver starting..");
         Application application = eurekaClient.getApplication(serviceName);
+        var instances = application.getInstances();
+        if (instances != null) {
+            var resolvedServerInfos = application.getInstances().stream().map(instanceInfo -> {
+                int port;
+                if (portMetaData != null) {
+                    String s = instanceInfo.getMetadata().get(portMetaData);
+                    port = Integer.parseInt(instanceInfo.getMetadata().get(portMetaData));
+                } else {
+                    port = instanceInfo.getPort();
+                }
+                return new EquivalentAddressGroup(new InetSocketAddress(instanceInfo.getHostName(), port), Attributes.EMPTY);
+            }).collect(Collectors.toList());
 
-        var resolvedServerInfos = application.getInstances().stream().map(instanceInfo -> {
-            int port;
-            if (portMetaData != null) {
-                String s = instanceInfo.getMetadata().get(portMetaData);
-                port = Integer.parseInt(instanceInfo.getMetadata().get(portMetaData));
-            } else {
-                port = instanceInfo.getPort();
-            }
-            return new EquivalentAddressGroup(new InetSocketAddress(instanceInfo.getHostName(), port), Attributes.EMPTY);
-        }).collect(Collectors.toList());
-
-        listener.onAddresses(resolvedServerInfos, Attributes.EMPTY);
+            listener.onAddresses(resolvedServerInfos, Attributes.EMPTY);
+        } else {
+            listener.onAddresses(Collections.emptyList(), Attributes.EMPTY);
+        }
     }
 
     @Override
