@@ -31,38 +31,49 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         //fizbuz30();
-       // interactive();
+        interactive();
 
         // test load balancing. please run docker-compose of top directory.
        // testTCPLoadBalancing_ChannelEachRequest();
        // testTCPLoadBalancing_sharedChannel();
        // testL7LoadBalancing_sharedChannel();
 
+        //metadateSample();
+
+
+    }
+
+    private static void metadateSample() {
+
         var ch = createChannel();
         var stub = FizBuzServiceGrpc.newBlockingStub(ch)
-                                    // add metadata with client interceptor..
-                         .withInterceptors(new ClientInterceptor() {
-                             @Override
-                             public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
-                                     MethodDescriptor<ReqT, RespT> method, CallOptions callOptions,
-                                     Channel next) {
-                                 var call = next.newCall(method, callOptions);
-                                 return  new ForwardingClientCall.SimpleForwardingClientCall<>(call){
-                                     @Override
-                                     public void start(Listener<RespT> responseListener,
-                                                       Metadata headers) {
-                                         // add metadata
-                                         headers.put(Metadata.Key.of("hoge", Metadata.ASCII_STRING_MARSHALLER), "hogev" );
-                                         super.start(responseListener, headers);
-                                     }
-                                 };
+                        // メタデータの設定は、ClientInterceptor でしか行えない。
+                        .withInterceptors(new ClientInterceptor() {
+                            @Override
+                            public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
+                                    MethodDescriptor<ReqT, RespT> method, CallOptions callOptions,
+                                    Channel next) {
+                                var call = next.newCall(method, callOptions);
+                                return  new ForwardingClientCall.SimpleForwardingClientCall<>(call){
+                                    @Override
+                                    public void start(Listener<RespT> responseListener,
+                                                      Metadata headers) {
+                                        // add metadata
+                                        // skip validation when not-validate set at metadata.
+                                        //headers.put(Metadata.Key.of("not-validate", Metadata.ASCII_STRING_MARSHALLER), "true" );
+                                        headers.put(Metadata.Key.of("test", Metadata.ASCII_STRING_MARSHALLER), "test" );
+                                        super.start(responseListener, headers);
+                                    }
+                                };
 
-                             }
-                         });
+                            }
+                        });
 
         try {
-            stub.fizBuzOne(InputNumber.newBuilder().setNum(12).build())
-                    .getAnswer();
+            // num is 1 to 100;
+            var res = stub.fizBuzOne(InputNumber.newBuilder().setNum(900).build())
+                .getAnswer();
+            System.out.println(res);
         }catch (StatusRuntimeException e) {
             System.out.println("error occurred");
             e.printStackTrace();
@@ -70,10 +81,6 @@ public class Main {
                 System.out.println(key +";;"+ e.getTrailers().get(Metadata.Key.of(key, Metadata.ASCII_STRING_MARSHALLER)));
             }
         }
-
-
-
-
     }
 
     private static void testTCPLoadBalancing_sharedChannel() {
@@ -147,7 +154,7 @@ public class Main {
         var chan = createChannel();
         var stb = ReactorFizBuzServiceGrpc.newReactorStub(chan);
 
-        System.out.println("Interactive FizBuz. Input Numbers.");
+        System.out.println("Interactive FizBuz. Input Numbers. number allow 1 to 100.");
 
         // 標準入力から無限に生成される Hot Stream なので、subscribe無しでデータを流すように、publishとconnectが必要。
         var source = Flux.create(sink -> {

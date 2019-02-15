@@ -14,12 +14,7 @@ public class FizBuzGrpcService extends ReactorFizBuzServiceGrpc.FizBuzServiceImp
 
     @Override
     public Mono<FizBuzAnswer> fizBuzOne(Mono<InputNumber> request) {
-        return request.map(i ->{
-            System.out.println(i);
-            var fs = i.getAllFields().keySet().iterator().next();
-            System.out.println(fs.getOptions());
-            return i.getNum();
-        })
+        return request.map(InputNumber::getNum)
                 .map(cal::calc)
                 .map(a -> FizBuzAnswer.newBuilder().setAnswer(a).build());
     }
