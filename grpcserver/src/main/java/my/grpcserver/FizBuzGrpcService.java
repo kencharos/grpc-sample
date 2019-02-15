@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@GRpcService
+@GRpcService(interceptors = ValidationInterceptor.class)
 public class FizBuzGrpcService extends ReactorFizBuzServiceGrpc.FizBuzServiceImplBase {
 
     @Autowired

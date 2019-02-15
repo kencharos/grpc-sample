@@ -1,7 +1,18 @@
 import java.util.Scanner;
 
+import io.grpc.CallOptions;
+import io.grpc.Channel;
+import io.grpc.ClientCall;
+import io.grpc.ClientInterceptor;
+import io.grpc.Context;
+import io.grpc.ForwardingClientCall;
+import io.grpc.ForwardingClientCall.SimpleForwardingClientCall;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Metadata;
+import io.grpc.Metadata.Key;
+import io.grpc.MethodDescriptor;
+import io.grpc.StatusRuntimeException;
 import my.rpc.FizBuzAnswer;
 import my.rpc.FizBuzServiceGrpc;
 import my.rpc.InputNumber;
@@ -28,9 +39,41 @@ public class Main {
        // testL7LoadBalancing_sharedChannel();
 
         var ch = createChannel();
-        FizBuzServiceGrpc.newBlockingStub(ch)
-                         .fizBuzOne(InputNumber.newBuilder().setNum(12).build())
-                         .getAnswer();
+        var stub = FizBuzServiceGrpc.newBlockingStub(ch)
+                                    // add metadata with client interceptor..
+                         .withInterceptors(new ClientInterceptor() {
+                             @Override
+                             public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
+                                     MethodDescriptor<ReqT, RespT> method, CallOptions callOptions,
+                                     Channel next) {
+                                 var call = next.newCall(method, callOptions);
+                                 return  new ForwardingClientCall.SimpleForwardingClientCall<>(call){
+                                     @Override
+                                     public void start(Listener<RespT> responseListener,
+                                                       Metadata headers) {
+                                         // add metadata
+                                         headers.put(Metadata.Key.of("hoge", Metadata.ASCII_STRING_MARSHALLER), "hogev" );
+                                         super.start(responseListener, headers);
+                                     }
+                                 };
+
+                             }
+                         });
+
+        try {
+            stub.fizBuzOne(InputNumber.newBuilder().setNum(12).build())
+                    .getAnswer();
+        }catch (StatusRuntimeException e) {
+            System.out.println("error occurred");
+            e.printStackTrace();
+            for(var key : e.getTrailers().keys()) {
+                System.out.println(key +";;"+ e.getTrailers().get(Metadata.Key.of(key, Metadata.ASCII_STRING_MARSHALLER)));
+            }
+        }
+
+
+
+
     }
 
     private static void testTCPLoadBalancing_sharedChannel() {
