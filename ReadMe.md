@@ -9,7 +9,7 @@
 - [x] ClientSideLoadBalanser and name resolver with Eureka
 - [x] Interceptor (Validation, autentication)
 - [x] grpc-gateway
-- [ ] grpc-web
+- [x] grpc-web
 - [ ] TLS
 
 ## projects
@@ -46,3 +46,20 @@ Eureka server. run at 8761
 ### gateway
 
 gRPC-gateway reverse proxy by golang
+
+### grpcweb
+
+sample for grpc-web. this use envoy proxy.
+
+envoy and grpcserver run in docker-compose.grpcweb.yaml.
+
+run `docker-compose -f docker-compose.grpcweb.yaml up`
+
+### grpcweb-client
+
+test grpc-web from browser.
+
+run `docker-compose -f docker-compose.grpcweb.yaml up`
+and open index.html
+
+

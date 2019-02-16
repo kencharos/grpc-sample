@@ -1,0 +1,21 @@
+version: '2'
+services:
+  grpcserver:
+    build: ./grpcserver
+    image: grpcserver:latest
+    container_name: grpcserver
+    environment:
+      - "GRPC_PORT=6565"
+      - "SERVER_PORT=8081"
+    ports:
+      - "8081:8081"
+  grpcweb:
+    build: ./grpcweb
+    image: grpcweb:latest
+    container_name: grpcweb
+    ports:
+      - "8080:8080"
+      - "9901:9901"
+    depends_on: 
+      - grpcserver
+    
