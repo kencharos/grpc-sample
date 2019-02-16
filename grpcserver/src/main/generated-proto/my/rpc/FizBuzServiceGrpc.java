@@ -22,7 +22,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.18.0)",
-    comments = "Source: fizbuz.proto")
+    comments = "Source: my/rpc/fizbuz.proto")
 public final class FizBuzServiceGrpc {
 
   private FizBuzServiceGrpc() {}

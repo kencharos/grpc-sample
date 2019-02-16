@@ -8,6 +8,8 @@
 - [x] Proxy L7 LoadBalancer
 - [x] ClientSideLoadBalanser and name resolver with Eureka
 - [x] Interceptor (Validation, autentication)
+- [x] grpc-gateway
+- [ ] grpc-web
 - [ ] TLS
 
 ## projects
@@ -40,3 +42,7 @@ Front server using grpc client and eureka client load balancser. run at 8080
 ### grpceurela
 
 Eureka server. run at 8761
+
+### gateway
+
+gRPC-gateway reverse proxy by golang

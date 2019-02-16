@@ -2,30 +2,38 @@ syntax = "proto3";
 
 package my.rpc;
 
-import "validator.proto";
-
+import "google/api/annotations.proto";
+import "validator/validator.proto";
 
 option java_multiple_files = true;
 option java_package = "my.rpc";
 
 // The greeting service definition.
 service FizBuzService {
-    rpc FizBuzOne (InputNumber) returns (FizBuzAnswer) {}
+	// FizBuzAnser
+	//
+	// 1 to 100 number allowed.
+    rpc FizBuzOne (InputNumber) returns (FizBuzAnswer) {
+        option (google.api.http) = {
+          get: "/fizbuz/{num}"
+        };
+    }
     rpc FizBuzRange (FromTo) returns (stream FizBuzAnswer) {}
     rpc FizBuzBatch (stream InputNumber) returns (FizBuzList) {}
     rpc FizBuzMany (stream InputNumber) returns (stream FizBuzAnswer) {}
 }
 
+// single input
 message InputNumber {
     int32 num = 1 [(validator.range) = {min:0, max:100}, (validator.required) = {}];
 }
 
-
-
+// range input
 message FromTo {
     int32 fromTo = 1;
 }
 
+// answer
 message FizBuzAnswer {
     string answer = 1;
 }

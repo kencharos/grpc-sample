@@ -9,7 +9,7 @@ import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
 
 @javax.annotation.Generated(
 value = "by ReactorGrpc generator",
-comments = "Source: fizbuz.proto")
+comments = "Source: my/rpc/fizbuz.proto")
 public final class ReactorFizBuzServiceGrpc {
     private ReactorFizBuzServiceGrpc() {}
 
