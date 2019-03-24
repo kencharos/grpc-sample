@@ -1,4 +1,10 @@
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Spliterators;
+import java.util.concurrent.CountDownLatch;
+
+import com.google.common.util.concurrent.ListenableFuture;
 
 import io.grpc.CallOptions;
 import io.grpc.Channel;
@@ -13,8 +19,11 @@ import io.grpc.Metadata;
 import io.grpc.Metadata.Key;
 import io.grpc.MethodDescriptor;
 import io.grpc.StatusRuntimeException;
+import io.grpc.stub.StreamObserver;
 import my.rpc.FizBuzAnswer;
+import my.rpc.FizBuzList;
 import my.rpc.FizBuzServiceGrpc;
+import my.rpc.FromTo;
 import my.rpc.InputNumber;
 import my.rpc.ReactorFizBuzServiceGrpc;
 import reactor.core.publisher.Flux;
@@ -24,12 +33,13 @@ public class Main {
     /*
     基本のgrpc stubは、タイプ別に newStub, newBlockingStub, newFutureStubの３種類が選べる。
     newStubは4タイプ全ての処理が扱えるが、全てStreamObserverを扱う必要がある。
-    newBlockingStubで扱えるのは、Unary Typeのみ。
-    newFutureStubで扱えるのは、oneToMany Typeのみ。
+    newBlockingStubで扱えるのは、Unary Typeと ServerSideStream のみ(クライアントの引数が単一のもの)。
+    newFutureStubで扱えるのは、Unary Typeのみ。
     つまり、後ろの二つはクライアントから送る値が一つの場合だけ、楽ができる。
      */
 
     public static void main(String[] args) throws Exception {
+        //testAccessByBasicStub();
         //fizbuz30();
         interactive();
 
@@ -190,6 +200,101 @@ public class Main {
         return ManagedChannelBuilder.forAddress("localhost", 6564)
                 .usePlaintext()
                 .build();
+    }
+
+    private static void testAccessByBasicStub() throws Exception{
+        ManagedChannel channel = ManagedChannelBuilder
+                .forAddress("localhost", 6566)
+                .usePlaintext().build();
+
+        var blockStub = FizBuzServiceGrpc.newBlockingStub(channel);
+        var futureStub = FizBuzServiceGrpc.newFutureStub(channel);
+        var stub = FizBuzServiceGrpc.newStub(channel);
+
+        // Unary
+        System.out.println("--unaly");
+
+        FizBuzAnswer a1 = blockStub.fizBuzOne(InputNumber.newBuilder().setNum(1).build());
+        System.out.println(a1.getAnswer());
+
+        ListenableFuture<FizBuzAnswer> a1_1 = futureStub.fizBuzOne(InputNumber.newBuilder().setNum(1).build());
+        System.out.println(a1_1.get().getAnswer());
+
+        // server side stream
+        // send one message, receive messageom server.
+        System.out.println("--server side stream--");
+        Iterator<FizBuzAnswer> a2 = blockStub.fizBuzRange(FromTo.newBuilder().setFrom(2).setTo(20).build());
+        while (a2.hasNext()) {
+            System.out.println(a2.next().getAnswer());
+        }
+
+        CountDownLatch wait1 = new CountDownLatch(1);
+
+        // client side stream
+        System.out.println("--client side stream--");
+
+        // setup callback responseObserver first.
+        var requestSender =  stub.fizBuzBatch(new StreamObserver<FizBuzList>() {
+
+            @Override
+            public void onNext(FizBuzList value) {
+                // called after requestSender send all message and complete.
+                System.out.println("received answers");
+                for(int i = 0; i < value.getAnswerCount();i++) {
+                    System.out.println(value.getAnswer(i));
+                }
+            }
+
+            @Override
+            public void onCompleted() {
+                wait1.countDown();
+            }
+            @Override
+            public void onError(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        // send request and send complete.
+        requestSender.onNext(InputNumber.newBuilder().setNum(11).build());
+        requestSender.onNext(InputNumber.newBuilder().setNum(10).build());
+        requestSender.onNext(InputNumber.newBuilder().setNum(27).build());
+        requestSender.onCompleted();
+        // and execute callback's onNext once..
+        wait1.await();
+
+        // bi directional stream
+        System.out.println("--Bi Directional Stream--");
+        CountDownLatch wait2 = new CountDownLatch(1);
+
+        var biRequestSender = stub.fizBuzMany(new StreamObserver<FizBuzAnswer>() {
+            @Override
+            public void onNext(FizBuzAnswer value) {
+                System.out.println("receive answer " + value.getAnswer());
+            }
+            @Override
+            public void onCompleted() {
+                wait2.countDown();
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                t.printStackTrace();
+            }
+
+        });
+        // receive server data each onNext.
+        biRequestSender.onNext(InputNumber.newBuilder().setNum(3).build());
+        biRequestSender.onNext(InputNumber.newBuilder().setNum(1).build());
+        biRequestSender.onNext(InputNumber.newBuilder().setNum(80).build());
+        biRequestSender.onNext(InputNumber.newBuilder().setNum(90).build());
+
+        // send finish to server.
+        biRequestSender.onCompleted();
+
+        wait2.await();
+
+        channel.shutdown();
+
     }
 
 }

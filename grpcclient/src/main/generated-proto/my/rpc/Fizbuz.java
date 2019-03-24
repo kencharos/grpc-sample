@@ -44,16 +44,16 @@ public final class Fizbuz {
   static {
     java.lang.String[] descriptorData = {
       "\n\014fizbuz.proto\022\006my.rpc\"\032\n\013InputNumber\022\013\n" +
-      "\003num\030\001 \001(\005\"\030\n\006FromTo\022\016\n\006fromTo\030\001 \001(\005\"\036\n\014" +
-      "FizBuzAnswer\022\016\n\006answer\030\001 \001(\t\"\034\n\nFizBuzLi" +
-      "st\022\016\n\006answer\030\001 \003(\t2\375\001\n\rFizBuzService\0228\n\t" +
-      "FizBuzOne\022\023.my.rpc.InputNumber\032\024.my.rpc." +
-      "FizBuzAnswer\"\000\0227\n\013FizBuzRange\022\016.my.rpc.F" +
-      "romTo\032\024.my.rpc.FizBuzAnswer\"\0000\001\022:\n\013FizBu" +
-      "zBatch\022\023.my.rpc.InputNumber\032\022.my.rpc.Fiz" +
-      "BuzList\"\000(\001\022=\n\nFizBuzMany\022\023.my.rpc.Input" +
-      "Number\032\024.my.rpc.FizBuzAnswer\"\000(\0010\001B\n\n\006my" +
-      ".rpcP\001b\006proto3"
+      "\003num\030\001 \001(\005\"\"\n\006FromTo\022\014\n\004from\030\001 \001(\005\022\n\n\002to" +
+      "\030\002 \001(\005\"\036\n\014FizBuzAnswer\022\016\n\006answer\030\001 \001(\t\"\034" +
+      "\n\nFizBuzList\022\016\n\006answer\030\001 \003(\t2\375\001\n\rFizBuzS" +
+      "ervice\0228\n\tFizBuzOne\022\023.my.rpc.InputNumber" +
+      "\032\024.my.rpc.FizBuzAnswer\"\000\0227\n\013FizBuzRange\022" +
+      "\016.my.rpc.FromTo\032\024.my.rpc.FizBuzAnswer\"\0000" +
+      "\001\022:\n\013FizBuzBatch\022\023.my.rpc.InputNumber\032\022." +
+      "my.rpc.FizBuzList\"\000(\001\022=\n\nFizBuzMany\022\023.my" +
+      ".rpc.InputNumber\032\024.my.rpc.FizBuzAnswer\"\000" +
+      "(\0010\001B\n\n\006my.rpcP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -78,7 +78,7 @@ public final class Fizbuz {
     internal_static_my_rpc_FromTo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_my_rpc_FromTo_descriptor,
-        new java.lang.String[] { "FromTo", });
+        new java.lang.String[] { "From", "To", });
     internal_static_my_rpc_FizBuzAnswer_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_my_rpc_FizBuzAnswer_fieldAccessorTable = new

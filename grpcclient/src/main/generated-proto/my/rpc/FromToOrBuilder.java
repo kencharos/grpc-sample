@@ -8,7 +8,12 @@ public interface FromToOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 fromTo = 1;</code>
+   * <code>int32 from = 1;</code>
    */
-  int getFromTo();
+  int getFrom();
+
+  /**
+   * <code>int32 to = 2;</code>
+   */
+  int getTo();
 }

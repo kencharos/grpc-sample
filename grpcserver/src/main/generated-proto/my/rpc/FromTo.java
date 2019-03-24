@@ -4,6 +4,10 @@
 package my.rpc;
 
 /**
+ * <pre>
+ * range input
+ * </pre>
+ *
  * Protobuf type {@code my.rpc.FromTo}
  */
 public  final class FromTo extends
@@ -16,7 +20,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private FromTo() {
-    fromTo_ = 0;
+    from_ = 0;
+    to_ = 0;
   }
 
   @java.lang.Override
@@ -45,7 +50,12 @@ private static final long serialVersionUID = 0L;
             break;
           case 8: {
 
-            fromTo_ = input.readInt32();
+            from_ = input.readInt32();
+            break;
+          }
+          case 16: {
+
+            to_ = input.readInt32();
             break;
           }
           default: {
@@ -80,13 +90,22 @@ private static final long serialVersionUID = 0L;
             my.rpc.FromTo.class, my.rpc.FromTo.Builder.class);
   }
 
-  public static final int FROMTO_FIELD_NUMBER = 1;
-  private int fromTo_;
+  public static final int FROM_FIELD_NUMBER = 1;
+  private int from_;
   /**
-   * <code>int32 fromTo = 1;</code>
+   * <code>int32 from = 1;</code>
    */
-  public int getFromTo() {
-    return fromTo_;
+  public int getFrom() {
+    return from_;
+  }
+
+  public static final int TO_FIELD_NUMBER = 2;
+  private int to_;
+  /**
+   * <code>int32 to = 2;</code>
+   */
+  public int getTo() {
+    return to_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -103,8 +122,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (fromTo_ != 0) {
-      output.writeInt32(1, fromTo_);
+    if (from_ != 0) {
+      output.writeInt32(1, from_);
+    }
+    if (to_ != 0) {
+      output.writeInt32(2, to_);
     }
     unknownFields.writeTo(output);
   }
@@ -115,9 +137,13 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (fromTo_ != 0) {
+    if (from_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, fromTo_);
+        .computeInt32Size(1, from_);
+    }
+    if (to_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, to_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -135,8 +161,10 @@ private static final long serialVersionUID = 0L;
     my.rpc.FromTo other = (my.rpc.FromTo) obj;
 
     boolean result = true;
-    result = result && (getFromTo()
-        == other.getFromTo());
+    result = result && (getFrom()
+        == other.getFrom());
+    result = result && (getTo()
+        == other.getTo());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -148,8 +176,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + FROMTO_FIELD_NUMBER;
-    hash = (53 * hash) + getFromTo();
+    hash = (37 * hash) + FROM_FIELD_NUMBER;
+    hash = (53 * hash) + getFrom();
+    hash = (37 * hash) + TO_FIELD_NUMBER;
+    hash = (53 * hash) + getTo();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -246,6 +276,10 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
+   * <pre>
+   * range input
+   * </pre>
+   *
    * Protobuf type {@code my.rpc.FromTo}
    */
   public static final class Builder extends
@@ -283,7 +317,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      fromTo_ = 0;
+      from_ = 0;
+
+      to_ = 0;
 
       return this;
     }
@@ -311,7 +347,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public my.rpc.FromTo buildPartial() {
       my.rpc.FromTo result = new my.rpc.FromTo(this);
-      result.fromTo_ = fromTo_;
+      result.from_ = from_;
+      result.to_ = to_;
       onBuilt();
       return result;
     }
@@ -360,8 +397,11 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(my.rpc.FromTo other) {
       if (other == my.rpc.FromTo.getDefaultInstance()) return this;
-      if (other.getFromTo() != 0) {
-        setFromTo(other.getFromTo());
+      if (other.getFrom() != 0) {
+        setFrom(other.getFrom());
+      }
+      if (other.getTo() != 0) {
+        setTo(other.getTo());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -392,28 +432,54 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int fromTo_ ;
+    private int from_ ;
     /**
-     * <code>int32 fromTo = 1;</code>
+     * <code>int32 from = 1;</code>
      */
-    public int getFromTo() {
-      return fromTo_;
+    public int getFrom() {
+      return from_;
     }
     /**
-     * <code>int32 fromTo = 1;</code>
+     * <code>int32 from = 1;</code>
      */
-    public Builder setFromTo(int value) {
+    public Builder setFrom(int value) {
       
-      fromTo_ = value;
+      from_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 fromTo = 1;</code>
+     * <code>int32 from = 1;</code>
      */
-    public Builder clearFromTo() {
+    public Builder clearFrom() {
       
-      fromTo_ = 0;
+      from_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int to_ ;
+    /**
+     * <code>int32 to = 2;</code>
+     */
+    public int getTo() {
+      return to_;
+    }
+    /**
+     * <code>int32 to = 2;</code>
+     */
+    public Builder setTo(int value) {
+      
+      to_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 to = 2;</code>
+     */
+    public Builder clearTo() {
+      
+      to_ = 0;
       onChanged();
       return this;
     }

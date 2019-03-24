@@ -4,6 +4,10 @@
 package my.rpc;
 
 /**
+ * <pre>
+ * single input
+ * </pre>
+ *
  * Protobuf type {@code my.rpc.InputNumber}
  */
 public  final class InputNumber extends
@@ -246,6 +250,10 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
+   * <pre>
+   * single input
+   * </pre>
+   *
    * Protobuf type {@code my.rpc.InputNumber}
    */
   public static final class Builder extends

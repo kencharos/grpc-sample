@@ -40,6 +40,13 @@ public final class ReactorFizBuzServiceGrpc {
             return new ReactorFizBuzServiceStub(channel, callOptions);
         }
 
+        /**
+         * <pre>
+         *  FizBuzAnser
+         * 
+         *  1 to 100 number allowed.
+         * <pre>
+         */
         public reactor.core.publisher.Mono<my.rpc.FizBuzAnswer> fizBuzOne(reactor.core.publisher.Mono<my.rpc.InputNumber> reactorRequest) {
             return com.salesforce.reactorgrpc.stub.ClientCalls.oneToOne(reactorRequest, delegateStub::fizBuzOne);
         }
@@ -56,6 +63,13 @@ public final class ReactorFizBuzServiceGrpc {
             return com.salesforce.reactorgrpc.stub.ClientCalls.manyToMany(reactorRequest, delegateStub::fizBuzMany);
         }
 
+        /**
+         * <pre>
+         *  FizBuzAnser
+         * 
+         *  1 to 100 number allowed.
+         * <pre>
+         */
         public reactor.core.publisher.Mono<my.rpc.FizBuzAnswer> fizBuzOne(my.rpc.InputNumber reactorRequest) {
            return com.salesforce.reactorgrpc.stub.ClientCalls.oneToOne(reactor.core.publisher.Mono.just(reactorRequest), delegateStub::fizBuzOne);
         }
@@ -73,6 +87,13 @@ public final class ReactorFizBuzServiceGrpc {
      */
     public static abstract class FizBuzServiceImplBase implements io.grpc.BindableService {
 
+        /**
+         * <pre>
+         *  FizBuzAnser
+         * 
+         *  1 to 100 number allowed.
+         * <pre>
+         */
         public reactor.core.publisher.Mono<my.rpc.FizBuzAnswer> fizBuzOne(reactor.core.publisher.Mono<my.rpc.InputNumber> request) {
             throw new io.grpc.StatusRuntimeException(io.grpc.Status.UNIMPLEMENTED);
         }

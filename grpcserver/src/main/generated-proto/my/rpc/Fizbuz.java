@@ -46,16 +46,17 @@ public final class Fizbuz {
       "\n\023my/rpc/fizbuz.proto\022\006my.rpc\032\034google/ap" +
       "i/annotations.proto\032\031validator/validator" +
       ".proto\"&\n\013InputNumber\022\027\n\003num\030\001 \001(\005B\n\202\265\030\002" +
-      "\020d\212\265\030\000\"\030\n\006FromTo\022\016\n\006fromTo\030\001 \001(\005\"\036\n\014FizB" +
-      "uzAnswer\022\016\n\006answer\030\001 \001(\t\"\034\n\nFizBuzList\022\016" +
-      "\n\006answer\030\001 \003(\t2\222\002\n\rFizBuzService\022M\n\tFizB" +
-      "uzOne\022\023.my.rpc.InputNumber\032\024.my.rpc.FizB" +
-      "uzAnswer\"\025\202\323\344\223\002\017\022\r/fizbuz/{num}\0227\n\013FizBu" +
-      "zRange\022\016.my.rpc.FromTo\032\024.my.rpc.FizBuzAn" +
-      "swer\"\0000\001\022:\n\013FizBuzBatch\022\023.my.rpc.InputNu" +
-      "mber\032\022.my.rpc.FizBuzList\"\000(\001\022=\n\nFizBuzMa" +
-      "ny\022\023.my.rpc.InputNumber\032\024.my.rpc.FizBuzA" +
-      "nswer\"\000(\0010\001B\n\n\006my.rpcP\001b\006proto3"
+      "\020d\212\265\030\000\"\"\n\006FromTo\022\014\n\004from\030\001 \001(\005\022\n\n\002to\030\002 \001" +
+      "(\005\"\036\n\014FizBuzAnswer\022\016\n\006answer\030\001 \001(\t\"\034\n\nFi" +
+      "zBuzList\022\016\n\006answer\030\001 \003(\t2\222\002\n\rFizBuzServi" +
+      "ce\022M\n\tFizBuzOne\022\023.my.rpc.InputNumber\032\024.m" +
+      "y.rpc.FizBuzAnswer\"\025\202\323\344\223\002\017\022\r/fizbuz/{num" +
+      "}\0227\n\013FizBuzRange\022\016.my.rpc.FromTo\032\024.my.rp" +
+      "c.FizBuzAnswer\"\0000\001\022:\n\013FizBuzBatch\022\023.my.r" +
+      "pc.InputNumber\032\022.my.rpc.FizBuzList\"\000(\001\022=" +
+      "\n\nFizBuzMany\022\023.my.rpc.InputNumber\032\024.my.r" +
+      "pc.FizBuzAnswer\"\000(\0010\001B\n\n\006my.rpcP\001b\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -82,7 +83,7 @@ public final class Fizbuz {
     internal_static_my_rpc_FromTo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_my_rpc_FromTo_descriptor,
-        new java.lang.String[] { "FromTo", });
+        new java.lang.String[] { "From", "To", });
     internal_static_my_rpc_FizBuzAnswer_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_my_rpc_FizBuzAnswer_fieldAccessorTable = new

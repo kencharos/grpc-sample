@@ -189,6 +189,10 @@ public final class FizBuzServiceGrpc {
   public static abstract class FizBuzServiceImplBase implements io.grpc.BindableService {
 
     /**
+     * <pre>
+     * FizBuzAnser
+     * 1 to 100 number allowed.
+     * </pre>
      */
     public void fizBuzOne(my.rpc.InputNumber request,
         io.grpc.stub.StreamObserver<my.rpc.FizBuzAnswer> responseObserver) {
@@ -272,6 +276,10 @@ public final class FizBuzServiceGrpc {
     }
 
     /**
+     * <pre>
+     * FizBuzAnser
+     * 1 to 100 number allowed.
+     * </pre>
      */
     public void fizBuzOne(my.rpc.InputNumber request,
         io.grpc.stub.StreamObserver<my.rpc.FizBuzAnswer> responseObserver) {
@@ -326,6 +334,10 @@ public final class FizBuzServiceGrpc {
     }
 
     /**
+     * <pre>
+     * FizBuzAnser
+     * 1 to 100 number allowed.
+     * </pre>
      */
     public my.rpc.FizBuzAnswer fizBuzOne(my.rpc.InputNumber request) {
       return blockingUnaryCall(
@@ -363,6 +375,10 @@ public final class FizBuzServiceGrpc {
     }
 
     /**
+     * <pre>
+     * FizBuzAnser
+     * 1 to 100 number allowed.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<my.rpc.FizBuzAnswer> fizBuzOne(
         my.rpc.InputNumber request) {

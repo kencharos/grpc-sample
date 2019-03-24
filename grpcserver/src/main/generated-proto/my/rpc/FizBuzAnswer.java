@@ -4,6 +4,10 @@
 package my.rpc;
 
 /**
+ * <pre>
+ * answer
+ * </pre>
+ *
  * Protobuf type {@code my.rpc.FizBuzAnswer}
  */
 public  final class FizBuzAnswer extends
@@ -271,6 +275,10 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
+   * <pre>
+   * answer
+   * </pre>
+   *
    * Protobuf type {@code my.rpc.FizBuzAnswer}
    */
   public static final class Builder extends

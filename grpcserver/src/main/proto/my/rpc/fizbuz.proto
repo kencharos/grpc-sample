@@ -30,7 +30,8 @@ message InputNumber {
 
 // range input
 message FromTo {
-    int32 fromTo = 1;
+    int32 from = 1;
+    int32 to = 2;
 }
 
 // answer
