@@ -46,10 +46,9 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 }
 
-
 task cleanProtoGen{
 	doFirst{
-		delete("$projectDir/src/main/generated-proto")
+		delete protobuf.generatedFilesBaseDir
 	}
 }
 clean.dependsOn cleanProtoGen
@@ -60,32 +59,45 @@ protobuf {
 		artifact = "com.google.protobuf:protoc:${protobufVersion}"
 	}
 	plugins {
-		grpc {
+		grpc { // grpc plugin の取得設定
 			artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
 		}
-		reactor {
+		reactor { // reactor pluginの取得設定
 			artifact = "com.salesforce.servicelibs:reactor-grpc:${reactiveGrpcVersion}:jdk8@jar"
 		}
 	}
+	generateProtoTasks { //plugin を動かす最小設定。
+		all()*.plugins {
+			grpc {} // grpc plugin を使って、サービスクラスの生成を行う。デフォルトでは　grpc というソースセットに生成
+			reactor{} // reactor plugin を使って、Reactor 対応の クラス生成を行う。　デフォルトでは reactor というソースセットに生成
+		}
+		// Note. generateProtoTasks を記述しない場合は、デフォルトの javaタスクのみが実行され、protobuf のjava生成（メッセージクラスの生成）だけが実行される
+	}
+	// 出力先の設定。デフォルトは build/generated/source なので、ソース管理したい場合などは変更できる
+	//generatedFilesBaseDir = "$projectDir/gen"
+
+	/* 各 plugin の出力先を同じにする例
 	generateProtoTasks {
 
 		all().each { task ->
 			task.builtins {
-				java {
+				java { // java は protobuf(Messageクラス) の出力タスク
 					outputSubDir = 'generated-proto'
 				}
 			}
 			task.plugins {
-				grpc {
+				grpc { // grpc は、Gprcサービスの出力タスク
 					outputSubDir = 'generated-proto'
 				}
 			}
 			task.plugins {
-				reactor {
+				reactor { // reactor は Reactor-Grpcの出力タスク
 					outputSubDir = 'generated-proto'
 				}
 			}
 		}
 	}
+	// 出力先を srcの下へ
 	generatedFilesBaseDir = "${projectDir}/src/"
+	*/
 }
